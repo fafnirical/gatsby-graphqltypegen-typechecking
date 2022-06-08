@@ -1,0 +1,39 @@
+name: Typecheck
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  typecheck-nobuild:
+    name: Typecheck without building
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install
+        run: npm ci
+
+      - name: Run typechecking
+        run: npm run typecheck
+
+  typecheck-build:
+    name: Typecheck after building
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run typechecking
+        run: npm run typecheck
